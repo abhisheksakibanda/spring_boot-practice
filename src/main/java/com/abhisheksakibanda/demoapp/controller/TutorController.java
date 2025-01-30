@@ -20,6 +20,7 @@ public class TutorController {
         this.service = service;
     }
 
+//    @RequestMapping(method = RequestMethod.GET)
     @GetMapping
     public ResponseEntity<List<Tutor>> getTutors() {
         return service.getTutors();

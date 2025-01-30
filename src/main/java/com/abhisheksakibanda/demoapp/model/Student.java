@@ -1,7 +1,7 @@
 package com.abhisheksakibanda.demoapp.model;
 
+import com.abhisheksakibanda.demoapp.validation.ValidEmailDomain;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Past;
 
@@ -20,7 +20,7 @@ public class Student {
     @NotBlank(message = "Name is mandatory")
     private String name;
 
-    @Email
+    @ValidEmailDomain
     private String email;
 
     @Past
