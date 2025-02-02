@@ -25,15 +25,12 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class TutorServiceTest {
 
+    public static final String INSERT_SUCCESS_MESSAGE = "Tutor added successfully";
     @Mock
     private TutorRepository mockTutorRepository;
-
     @InjectMocks
     private TutorService tutorService;
-
     private Tutor tutor, newTutor;
-
-    public static final String INSERT_SUCCESS_MESSAGE = "Tutor added successfully";
 
     @BeforeEach
     void setUp() {

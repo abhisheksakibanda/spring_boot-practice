@@ -105,16 +105,16 @@ public class Student {
         return school;
     }
 
+    public void setSchool(School school) {
+        this.school = school;
+    }
+
     public Set<Teacher> getTeachers() {
         return teachers;
     }
 
     public void setTeachers(Set<Teacher> teachers) {
         this.teachers = teachers;
-    }
-
-    public void setSchool(School school) {
-        this.school = school;
     }
 
     public void addSchool(School school) {
