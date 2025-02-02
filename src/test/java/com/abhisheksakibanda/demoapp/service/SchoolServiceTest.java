@@ -4,7 +4,6 @@ import com.abhisheksakibanda.demoapp.exception.ConflictException;
 import com.abhisheksakibanda.demoapp.exception.ResourceNotFoundException;
 import com.abhisheksakibanda.demoapp.model.School;
 import com.abhisheksakibanda.demoapp.model.Student;
-import com.abhisheksakibanda.demoapp.model.Tutor;
 import com.abhisheksakibanda.demoapp.repository.SchoolRepository;
 import com.abhisheksakibanda.demoapp.repository.StudentRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -72,7 +71,7 @@ class SchoolServiceTest {
         when(mockSchoolRepository.findAll()).thenReturn(List.of());
 
         assertThrows(ResourceNotFoundException.class, () -> schoolService.getSchools());
-        }
+    }
 
     @Test
     void testAddSchool() {
