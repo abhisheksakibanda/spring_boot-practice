@@ -4,6 +4,7 @@ import jakarta.validation.Constraint;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import jakarta.validation.Payload;
+import org.springframework.stereotype.Component;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -23,10 +24,11 @@ public @interface ValidEmailDomain {
 
 class ValidEmailDomainValidator implements ConstraintValidator<ValidEmailDomain, String> {
 
-    @Override
-    public void initialize(ValidEmailDomain validEmailDomain) {
-        ConstraintValidator.super.initialize(validEmailDomain);
-    }
+//    Not required to implement the initialize method in this case.
+//    @Override
+//    public void initialize(ValidEmailDomain validEmailDomain) {
+//        ConstraintValidator.super.initialize(validEmailDomain);
+//    }
 
     @Override
     public boolean isValid(String s, ConstraintValidatorContext constraintValidatorContext) {

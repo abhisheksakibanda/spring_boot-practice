@@ -48,14 +48,11 @@ public class TutorService {
         // Update the tutor's first name if provided
         // Not required to use repository method to update (save()) the tutor values when in a transaction, as the entity is already managed
         if (tutor.getFirstName() != null && !tutor.getFirstName().isBlank() && !tutor.getFirstName().equals(foundTutor.getFirstName())) {
-            if (tutorRepository.existsByFirstName(tutor.getFirstName())) {
-                throw new ConflictException("Tutor with name " + tutor.getFirstName() + " already exists");
-            }
             foundTutor.setFirstName(tutor.getFirstName());
         }
 
         if (tutor.getLastName() != null && !tutor.getLastName().isBlank() && !tutor.getLastName().equals(foundTutor.getLastName())) {
-            foundTutor.setFirstName(tutor.getFirstName());
+            foundTutor.setLastName(tutor.getLastName());
         }
         return ResponseEntity.ok(foundTutor);
     }
