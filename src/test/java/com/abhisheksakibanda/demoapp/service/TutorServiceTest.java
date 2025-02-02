@@ -26,6 +26,7 @@ import static org.mockito.Mockito.when;
 class TutorServiceTest {
 
     public static final String INSERT_SUCCESS_MESSAGE = "Tutor added successfully";
+    public static final String DELETE_SUCCESS_SUBSTRING = "deleted successfully";
     @Mock
     private TutorRepository mockTutorRepository;
     @InjectMocks
@@ -159,7 +160,7 @@ class TutorServiceTest {
         ResponseEntity<String> response = tutorService.deleteTutor(1L);
 
         assertTrue(response.getStatusCode().is2xxSuccessful());
-        assertTrue(Objects.requireNonNull(response.getBody()).contains("deleted successfully"));
+        assertTrue(Objects.requireNonNull(response.getBody()).contains(DELETE_SUCCESS_SUBSTRING));
     }
 
     @Test
