@@ -44,7 +44,7 @@ pipeline {
     stage('Package (inside Docker)') {
       steps {
         script {
-          docker.image(MVN_IMAGE).inside('-e HOME=$WORKSPACE') {
+          docker.image(env.MVN_IMAGE).inside('-e HOME=$WORKSPACE') {
             sh 'mkdir -p $HOME/.m2'
             sh './mvnw -B -DskipTests package'
             sh 'ls -la target || true'
@@ -60,7 +60,7 @@ pipeline {
 
     stage('Build Docker Image') {
       steps {
-        sh './mvnw -B -DskipTests spring-boot:build-image -Dspring-boot.build-image.imageName=${APP_IMAGE}'
+        sh 'docker built -t ${APP_IMAGE} .'
         sh 'docker images | head'
       }
     }
