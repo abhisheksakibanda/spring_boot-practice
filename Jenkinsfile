@@ -60,7 +60,7 @@ pipeline {
 
     stage('Build Docker Image') {
       steps {
-        sh 'docker built -t ${APP_IMAGE} .'
+        sh 'docker build -t ${APP_IMAGE} .'
         sh 'docker images | head'
       }
     }
