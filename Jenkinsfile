@@ -14,6 +14,7 @@ pipeline {
   stages {
     stage('Build + Test') {
       steps {
+        deleteDir()
         script {
           docker.image(MVN_IMAGE).inside {
             sh 'java --version'
