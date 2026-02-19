@@ -4,7 +4,6 @@ pipeline {
   options {
     timestamps()
     ansiColor('xterm')
-    skipDefaultCheckout true
   }
 
   environment {
@@ -15,11 +14,12 @@ pipeline {
   stages {
     stage('Build + Test') {
       steps {
-        deleteDir()
-        checkout scm
         script {
           docker.image(MVN_IMAGE).inside {
             sh 'java --version'
+            sh 'ls -la mvnw'
+            sh 'chmod +x mvnw'
+            sh 'ls -la mvnw'
             sh './mvnw -v'
             sh './mvnw -B clean test'
           }
