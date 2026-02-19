@@ -44,7 +44,8 @@ pipeline {
     stage('Package (inside Docker)') {
       steps {
         script {
-          docker.image(MVN_IMAGE).inside {
+          docker.image(MVN_IMAGE).inside('-e HOME=$WORKSPACE') {
+            sh 'mkdir -p $HOME/.m2'
             sh './mvnw -B -DskipTests package'
             sh 'ls -la target || true'
           }
