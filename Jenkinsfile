@@ -15,8 +15,9 @@ pipeline {
     stage('Build + Test') {
       steps {
         script {
-          docker.image(MVN_IMAGE).inside {
+          docker.image(env.MVN_IMAGE).inside(-e HOME='$WORKSPACE') {
             sh 'java --version'
+            sh 'mkdir -p $HOME/.m2'
             sh 'ls -la mvnw'
             sh 'chmod +x mvnw'
             sh 'ls -la mvnw'
