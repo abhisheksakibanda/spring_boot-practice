@@ -4,6 +4,7 @@ pipeline {
   options {
     timestamps()
     ansiColor('xterm')
+    skipDefaultCheckout()
   }
 
   environment {
@@ -15,6 +16,7 @@ pipeline {
     stage('Build + Test') {
       steps {
         deleteDir()
+        checkout scm
         script {
           docker.image(MVN_IMAGE).inside {
             sh 'java --version'
