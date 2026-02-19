@@ -4,6 +4,7 @@ pipeline {
   options {
     timestamps()
     ansiColor('xterm')
+    skipDefaultCheckout true
   }
 
   environment {
@@ -12,6 +13,13 @@ pipeline {
   }
 
   stages {
+    stage('Checkout') {
+      steps {
+        deleteDir()
+        checkout scm
+      }
+    }
+
     stage('Build + Test') {
       steps {
         script {
@@ -37,7 +45,7 @@ pipeline {
       steps {
         script {
           docker.image(MVN_IMAGE).inside {
-            sh './mnvw -B -DskipTests package'
+            sh './mvnw -B -DskipTests package'
             sh 'ls -la target || true'
           }
         }
@@ -51,7 +59,7 @@ pipeline {
 
     stage('Build Docker Image') {
       steps {
-        sh '.mnvw -B -DskipTests spring-boot:build-image -Dspring-boot.build-image.imageName=${APP_IMAGE}'
+        sh '.mvnw -B -DskipTests spring-boot:build-image -Dspring-boot.build-image.imageName=${APP_IMAGE}'
         sh 'docker images | head'
       }
     }
