@@ -60,7 +60,7 @@ pipeline {
 
     stage('Build Docker Image') {
       steps {
-        sh './mvnw -B -DskipTests spring-boot:build-image -Dspring-boot.build-image.imageName=${env.APP_IMAGE}'
+        sh './mvnw -B -DskipTests spring-boot:build-image -Dspring-boot.build-image.imageName=$APP_IMAGE'
         sh 'docker images | head'
       }
     }
