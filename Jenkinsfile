@@ -23,7 +23,7 @@ pipeline {
     stage('Build + Test') {
       steps {
         script {
-          docker.image(env.MVN_IMAGE).inside("-e HOME=${env.WORKSPACE} -v /home/jenkins/.m2:${env.WORKSPACE}/.m2") {
+          docker.image(env.MVN_IMAGE).inside("-e HOME=\\${env.WORKSPACE} -v /home/jenkins/.m2:\\${env.WORKSPACE}/.m2") {
             sh 'id'
             sh 'echo "HOME=$HOME"'
             sh 'ls -ld $HOME $HOME/.m2'
@@ -44,7 +44,7 @@ pipeline {
     stage('Package (inside Docker)') {
       steps {
         script {
-          docker.image(env.MVN_IMAGE).inside("-e HOME=${env.WORKSPACE} -v /home/jenkins/.m2:${env.WORKSPACE}/.m2") {
+          docker.image(env.MVN_IMAGE).inside("-e HOME=\\${env.WORKSPACE} -v /home/jenkins/.m2:\\${env.WORKSPACE}/.m2") {
             sh './mvnw -B -DskipTests package'
             sh 'ls -la target || true'
           }
