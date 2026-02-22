@@ -24,6 +24,9 @@ pipeline {
       steps {
         script {
           docker.image(env.MVN_IMAGE).inside('-v /home/jenkins/.m2:/root/.m2') {
+            sh 'id'
+            sh 'echo "HOME=$HOME"'
+            sh 'ls -ld $HOME $HOME/.m2'
             sh 'java --version'
             sh 'chmod +x mvnw'
             sh './mvnw -v'
