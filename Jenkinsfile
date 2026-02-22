@@ -10,6 +10,7 @@ pipeline {
   environment {
     MVN_IMAGE = 'maven:3.9-eclipse-temurin-21'
     APP_IMAGE = "spring-boot-practice:${env.BUILD_NUMBER}"
+    MVN_ARGS = "-e HOME=\$WORKSPACE -v /home/jenkins/.m2:\$WORKSPACE/.m2"
   }
 
   stages {
@@ -23,10 +24,7 @@ pipeline {
     stage('Build + Test') {
       steps {
         script {
-          docker.image(env.MVN_IMAGE).inside("-e HOME=\$WORKSPACE -v /home/jenkins/.m2:\$WORKSPACE/.m2") {
-            sh 'id'
-            sh 'echo "HOME=$HOME"'
-            sh 'ls -ld $HOME $HOME/.m2'
+          docker.image(env.MVN_IMAGE).inside(env.MVN_ARGS) {
             sh 'java --version'
             sh 'chmod +x mvnw'
             sh './mvnw -v'
@@ -44,7 +42,7 @@ pipeline {
     stage('Package (inside Docker)') {
       steps {
         script {
-          docker.image(env.MVN_IMAGE).inside("-e HOME=\$WORKSPACE -v /home/jenkins/.m2:\$WORKSPACE/.m2") {
+          docker.image(env.MVN_IMAGE).inside(env.MVN_ARGS) {
             sh './mvnw -B -DskipTests package'
             sh 'ls -la target || true'
           }
