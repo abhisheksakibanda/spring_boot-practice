@@ -21,6 +21,14 @@ pipeline {
       }
     }
 
+    stage('Get Git Info') {
+      steps {
+        script {
+          env.GIT_COMMIT = sh(script: "git rev-parse --short HEAD", return stdout: true).trim()
+        }
+      }
+    }
+
     stage('Build + Test') {
       steps {
         script {
@@ -57,9 +65,10 @@ pipeline {
 
     stage('Build Docker Image') {
       steps {
+        def imageTag = "${env.BUILD_NUMBER}-${env.GIT_COMMIT}"
         // Build without Dockerfile (SpringBoot buildpacks) - simpler but less control and heavier image
         // sh './mvnw -B -DskipTests spring-boot:build-image -Dspring-boot.build-image.imageName=$APP_IMAGE'
-        sh 'docker build -t ${APP_IMAGE} .'
+        sh "docker build -t ${imageTag} ."
         sh 'docker images | head'
       }
     }
