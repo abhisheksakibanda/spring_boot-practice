@@ -15,7 +15,7 @@ pipeline {
   stages {
     stage('Checkout') {
       steps {
-        deleteDir()
+        cleanWs()
         checkout scm
       }
     }
@@ -23,12 +23,9 @@ pipeline {
     stage('Build + Test') {
       steps {
         script {
-          docker.image(env.MVN_IMAGE).inside('-e HOME=$WORKSPACE') {
+          docker.image(env.MVN_IMAGE).inside('-v /home/jenkins/.m2:/root/.m2') {
             sh 'java --version'
-            sh 'mkdir -p $HOME/.m2'
-            sh 'ls -la mvnw'
             sh 'chmod +x mvnw'
-            sh 'ls -la mvnw'
             sh './mvnw -v'
             sh './mvnw -B clean test'
           }
@@ -44,8 +41,7 @@ pipeline {
     stage('Package (inside Docker)') {
       steps {
         script {
-          docker.image(env.MVN_IMAGE).inside('-e HOME=$WORKSPACE') {
-            sh 'mkdir -p $HOME/.m2'
+          docker.image(env.MVN_IMAGE).inside('-v /home/jenkins/.m2:/root/.m2') {
             sh './mvnw -B -DskipTests package'
             sh 'ls -la target || true'
           }
@@ -60,6 +56,8 @@ pipeline {
 
     stage('Build Docker Image') {
       steps {
+        // Build without Dockerfile (SpringBoot buildpacks) - simpler but less control and heavier image
+        // sh './mvnw -B -DskipTests spring-boot:build-image -Dspring-boot.build-image.imageName=$APP_IMAGE'
         sh 'docker build -t ${APP_IMAGE} .'
         sh 'docker images | head'
       }
