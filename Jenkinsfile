@@ -24,7 +24,7 @@ pipeline {
     stage('Get Git Info') {
       steps {
         script {
-          env.GIT_COMMIT = sh(script: "git rev-parse --short HEAD", return stdout: true).trim()
+          env.GIT_COMMIT = sh(script: "git rev-parse --short HEAD", stdout: true).trim()
         }
       }
     }
