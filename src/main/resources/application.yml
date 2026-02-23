@@ -1,0 +1,30 @@
+spring:
+  application:
+    name: Demo Application
+
+  web:
+    error:
+      include-message: always
+
+  mvc:
+    servlet:
+      path: /api/v1 # This is the base path for the API
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+        show_sql: true
+        format_sql: true
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/student
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD:}
+
+  sql:
+    init:
+      mode: always
